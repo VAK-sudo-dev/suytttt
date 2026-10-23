@@ -1,0 +1,98 @@
+/* ============================================================
+   animations.css — Keyframes dùng chung cho các chi tiết nhẹ
+   (chỉ transform/opacity — tối ưu GPU)
+   ============================================================ */
+
+/* Lá thư & ảnh nhấp nhô rất khẽ khi đã hiện ra */
+@keyframes bob {
+  from {
+    transform: translateY(-4px);
+  }
+  to {
+    transform: translateY(5px);
+  }
+}
+
+.bob-a {
+  animation: bob 5.4s ease-in-out infinite alternate;
+}
+
+.bob-b {
+  animation: bob 6.3s ease-in-out infinite alternate-reverse;
+}
+
+/* Hạt bụi sáng trôi (dùng cho BackgroundEffects ở cảnh phong bì) */
+@keyframes mote-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--mote-alpha, 0.5);
+  }
+  85% {
+    opacity: var(--mote-alpha, 0.5);
+  }
+  100% {
+    transform: translate3d(var(--mote-x, 20px), -46vh, 0);
+    opacity: 0;
+  }
+}
+
+.mote-dot {
+  position: absolute;
+  bottom: -12px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #fff6dc 0%, #ffe9a8 55%, transparent 75%);
+  animation: mote-float var(--mote-dur, 14s) linear infinite;
+  animation-delay: var(--mote-delay, 0s);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Ánh vàng quanh hoa thở nhẹ */
+@keyframes glow-breathe {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Lấp lánh khi lá thư được đẩy ra */
+@keyframes sparkle-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--spark-dx, 0px)), calc(-50% + var(--spark-dy, -60px)))
+      scale(1) rotate(160deg);
+    opacity: 0;
+  }
+}
+
+.spark-dot {
+  position: absolute;
+  left: var(--spark-left, 50%);
+  top: var(--spark-top, 45%);
+  width: var(--spark-size, 8px);
+  height: var(--spark-size, 8px);
+  border-radius: 999px;
+  background: radial-gradient(circle, #fff6dc 0%, var(--sun) 60%, transparent 80%);
+  animation: sparkle-pop var(--spark-dur, 1.1s) ease-out forwards;
+  animation-delay: var(--spark-delay, 0s);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Chuyển động song song theo chuột — tắt trên thiết bị cảm ứng */
+@media (hover: none) {
+  .parallax-layer {
+    transform: none !important;
+  }
+}

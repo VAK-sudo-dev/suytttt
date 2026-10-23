@@ -1,0 +1,247 @@
+/* ============================================================
+   global.css — Biến thiết kế, nền sân khấu, typography, hint
+   Palette: hướng dương #F9C846 · vàng nhạt #FFE9A8 · xanh lá
+   #4E7B42 / #24452D · giấy kem #FFF8E9 · hồng phấn #F2B8C6
+   · nâu mực #65483A
+   ============================================================ */
+
+:root {
+  --sun: #f9c846;
+  --sun-light: #ffe9a8;
+  --sun-deep: #e8a93a;
+  --leaf: #4e7b42;
+  --leaf-dark: #24452d;
+  --paper: #fff8e9;
+  --paper-deep: #fbefd8;
+  --paper-card: #fffcf2;
+  --blush: #f2b8c6;
+  --wax: #c66388;
+  --wax-deep: #a94e71;
+  --ink: #65483a;
+  --ink-soft: #8a6a52;
+  --ink-faint: rgba(101, 72, 58, 0.55);
+
+  --font-ui: var(--font-be-vietnam), "Be Vietnam Pro", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-letter: var(--font-playfair), "Playfair Display", Georgia,
+    "Times New Roman", serif;
+  --font-script: var(--font-dancing), "Dancing Script", "Segoe Script", cursive;
+
+  --env-w: min(88vw, 380px);
+  --shadow-object: 0 22px 48px rgba(101, 72, 58, 0.2),
+    0 4px 12px rgba(101, 72, 58, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: #fdf6e5;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--wax);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* ---------- Sân khấu ---------- */
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(
+    180deg,
+    #fdf6e5 0%,
+    #fbeeda 40%,
+    #f7e9cb 66%,
+    #ecf0d5 100%
+  );
+}
+
+/* Đất ngọn cỏ mềm phía dưới */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 34% at 50% 106%, rgba(110, 154, 85, 0.3), transparent 62%),
+    radial-gradient(ellipse 60% 22% at 22% 108%, rgba(78, 123, 66, 0.22), transparent 60%),
+    radial-gradient(ellipse 60% 22% at 80% 110%, rgba(78, 123, 66, 0.2), transparent 60%);
+}
+
+/* Ánh sáng vàng ấm quanh tâm màn hình */
+.stage-sun-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 46% 38% at 50% 42%,
+    rgba(255, 224, 150, 0.5),
+    rgba(255, 224, 150, 0.16) 55%,
+    transparent 78%
+  );
+  animation: glow-breathe 7s ease-in-out infinite alternate;
+}
+
+/* Vignette rìa ấm */
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 120% 110% at 50% 46%,
+    transparent 62%,
+    rgba(122, 84, 40, 0.12) 100%
+  );
+}
+
+/* ---------- Header dedicaton ---------- */
+.page-header {
+  position: absolute;
+  z-index: 30;
+  top: max(24px, env(safe-area-inset-top));
+  left: clamp(20px, 5vw, 72px);
+  right: clamp(20px, 5vw, 72px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  pointer-events: none;
+}
+
+.dedication {
+  margin: 0;
+  max-width: 260px;
+  font: italic 400 clamp(16px, 2.2vw, 20px) / 1.6 var(--font-letter);
+  color: var(--ink);
+}
+
+.date-block {
+  margin: 0;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--ink-faint);
+}
+
+.date-block span {
+  display: block;
+  font: 400 clamp(24px, 3vw, 30px) / 1.3 var(--font-letter);
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Dòng gợi ý ---------- */
+.hint-line {
+  position: absolute;
+  z-index: 30;
+  left: 24px;
+  right: 24px;
+  bottom: max(42px, env(safe-area-inset-bottom, 42px) + 30px);
+  margin: 0;
+  text-align: center;
+  font: italic 400 clamp(15px, 2vw, 17.5px) / 1.7 var(--font-letter);
+  color: var(--ink-soft);
+  text-shadow:
+    0 1px 12px rgba(255, 248, 233, 0.95),
+    0 1px 8px rgba(255, 248, 233, 0.9);
+  pointer-events: none;
+}
+
+.hint-chip {
+  position: absolute;
+  z-index: 30;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 248, 233, 0.82);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(101, 72, 58, 0.12);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ---------- Lớp chứa các vật thể ---------- */
+.object-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+}
+
+/* ---------- Nút âm thanh ---------- */
+.sound-toggle {
+  position: fixed;
+  z-index: 40;
+  right: max(16px, env(safe-area-inset-right, 16px));
+  bottom: max(16px, env(safe-area-inset-bottom, 16px));
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(101, 72, 58, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 248, 233, 0.88);
+  backdrop-filter: blur(4px);
+  color: var(--ink-soft);
+  box-shadow: 0 3px 14px rgba(101, 72, 58, 0.14);
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+
+.sound-toggle:hover {
+  background: #fdf2da;
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .stage-sun-glow,
+  .bob-a,
+  .bob-b,
+  .mote-dot,
+  .spark-dot {
+    animation: none !important;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .dedication {
+    max-width: 170px;
+    font-size: 15px;
+  }
+  .date-block {
+    max-width: 140px;
+    font-size: 10px;
+  }
+}
